@@ -1,6 +1,6 @@
 # AMAL - Automação Modular de Ambiente Linux 
 
-Repositório para **bootstrap automatizado de ambientes Linux**, focado em preparar sistemas novos de forma **segura, repetível, modular e consistente**.
+Projeto **bootstrap automatizado de ambientes Linux**, focado em preparar sistemas novos de forma **segura, repetível, modular e consistente**.
 
 O projeto evoluiu para uma **arquitetura modular**, onde cada responsabilidade do sistema é isolada em um módulo específico, facilitando manutenção, testes e extensões futuras.
 
