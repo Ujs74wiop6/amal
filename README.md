@@ -24,7 +24,7 @@ Compatível com **Ubuntu**, **Debian**, **Fedora** e **Arch Linux**.
 ## 🧱 Arquitetura do Projeto
 
 ```
-Dotfiles/
+amal/
 ├── install.sh          # Orquestrador principal
 ├── README.md           # Documentação
 └── lib/
@@ -149,8 +149,8 @@ Instala de forma idempotente:
 1. Clone o repositório:
 
 ```bash
-git clone git@github.com:TebarrotTI/Dotfiles.git
-cd Dotfiles
+git clone git@github.com:Ujs74wiop6/amal.git
+cd amal
 ```
 
 2. Conceda permissão de execução:
