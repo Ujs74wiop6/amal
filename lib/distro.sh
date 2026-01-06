@@ -1,45 +1,41 @@
 #!/usr/bin/env bash
 
-# =============================
-# DETECÇÃO DE DISTRIBUIÇÃO
-# =============================
+detect_distro() {
+    if [[ ! -f /etc/os-release ]]; then
+        error "Arquivo /etc/os-release não encontrado. Distro não suportada."
+        exit 1
+    fi
 
-if [[ ! -f /etc/os-release ]]; then
-    error "Arquivo /etc/os-release não encontrado. Distro não suportada."
-fi
+    # shellcheck disable=SC1091
+    source /etc/os-release
 
-# shellcheck disable=SC1091
-source /etc/os-release
+    DISTRO_ID="$ID"
+    DISTRO_NAME="$NAME"
 
-DISTRO_ID="$ID"
-DISTRO_NAME="$NAME"
+    case "$ID" in
+        ubuntu|debian)
+            DISTRO_FAMILY="debian"
+            PKG_MANAGER="apt"
+            UPDATE_CMD="sudo apt update"
+            INSTALL_CMD="sudo apt install -y"
+            ;;
+        fedora)
+            DISTRO_FAMILY="redhat"
+            PKG_MANAGER="dnf"
+            UPDATE_CMD="sudo dnf makecache"
+            INSTALL_CMD="sudo dnf install -y"
+            ;;
+        arch)
+            DISTRO_FAMILY="arch"
+            PKG_MANAGER="pacman"
+            UPDATE_CMD="sudo pacman -Sy"
+            INSTALL_CMD="sudo pacman -S --noconfirm"
+            ;;
+        *)
+            error "Distribuição não suportada: $ID"
+            exit 1
+            ;;
+    esac
 
-# =============================
-# NORMALIZAÇÃO POR FAMÍLIA
-# =============================
-
-case "$ID" in
-    ubuntu|debian)
-        DISTRO_FAMILY="debian"
-        PKG_MANAGER="apt"
-        UPDATE_CMD="sudo apt update"
-        INSTALL_CMD="sudo apt install -y"
-        ;;
-    fedora)
-        DISTRO_FAMILY="redhat"
-        PKG_MANAGER="dnf"
-        UPDATE_CMD="sudo dnf makecache"
-        INSTALL_CMD="sudo dnf install -y"
-        ;;
-    arch)
-        DISTRO_FAMILY="arch"
-        PKG_MANAGER="pacman"
-        UPDATE_CMD="sudo pacman -Sy"
-        INSTALL_CMD="sudo pacman -S --noconfirm"
-        ;;
-    *)
-        error "Distribuição não suportada: $ID"
-        ;;
-esac
-
-success "Distribuição detectada: $DISTRO_NAME ($DISTRO_FAMILY)"
+    success "Distribuição detectada: $DISTRO_NAME ($DISTRO_FAMILY)"
+}
