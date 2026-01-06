@@ -74,10 +74,19 @@ configure_docker_group() {
 # =============================
 
 setup_docker() {
-    install_docker
-    enable_docker_service
-    start_docker_service
-    configure_docker_group
-
-    success "Docker configurado."
+    case "$DISTRO_FAMILY" in
+        debian)
+            install_docker_debian
+            ;;
+        redhat)
+            install_docker_redhat
+            ;;
+        arch)
+            install_docker_arch
+            ;;
+        *)
+            error "Docker não suportado para a distro: $DISTRO_FAMILY"
+            exit 1
+            ;;
+    esac
 }
