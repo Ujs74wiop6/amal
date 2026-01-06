@@ -36,6 +36,7 @@ is_installed() {
             ;;
         *)
             error "Gerenciador de pacotes desconhecido."
+            exit 1
             ;;
     esac
 }
@@ -77,4 +78,12 @@ install_essential_packages() {
     done
 
     success "Pacotes essenciais verificados."
+}
+
+# =============================
+# API PÚBLICA DO MÓDULO
+# =============================
+
+install_packages() {
+    install_essential_packages
 }
