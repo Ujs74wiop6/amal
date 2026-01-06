@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 BASHRC_FILE="$HOME/.bashrc"
-START_MARK="# >>> SETUP_LINUX_AUTOMATICO >>>"
-END_MARK="# <<< SETUP_LINUX_AUTOMATICO <<<"
+START_MARK="# >>> SETUP_AMAL >>>"
+END_MARK="# <<< SETUP_AMAL <<<"
 
 # =============================
 # REMOÇÃO DO BLOCO ANTIGO
@@ -38,7 +38,7 @@ alias l='ls -CF'
 # =============================
 alias cls='clear'
 alias neo='neofetch'
-alias internet='ping -c 4 8.8.8.8'
+alias ping='ping -c 4 8.8.8.8'
 
 # =============================
 # SISTEMA (USE COM CAUTELA)
