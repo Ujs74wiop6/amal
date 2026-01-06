@@ -1,19 +1,29 @@
 #!/usr/bin/env bash
 
 # =============================
+# VALIDAÇÃO DE CONTEXTO
+# =============================
+
+require_docker_context() {
+    : "${DISTRO_FAMILY:?}"
+    : "${PKG_MANAGER:?}"
+}
+
+# =============================
 # DEFINIÇÃO DO PACOTE DOCKER
 # =============================
 
 get_docker_package() {
-    case "$DISTRO" in
-        ubuntu|debian)
+    case "$DISTRO_FAMILY" in
+        debian)
             echo "docker.io"
             ;;
-        fedora|arch)
+        redhat|arch)
             echo "docker"
             ;;
         *)
             error "Distribuição não suportada para Docker."
+            exit 1
             ;;
     esac
 }
@@ -74,19 +84,16 @@ configure_docker_group() {
 # =============================
 
 setup_docker() {
-    case "$DISTRO_FAMILY" in
-        debian)
-            install_docker_debian
-            ;;
-        redhat)
-            install_docker_redhat
-            ;;
-        arch)
-            install_docker_arch
-            ;;
-        *)
-            error "Docker não suportado para a distro: $DISTRO_FAMILY"
-            exit 1
-            ;;
-    esac
+    require_docker_context
+
+    install_docker
+    enable_docker_service
+    start_docker_service
+    configure_docker_group
+
+    if [[ "${DOCKER_GROUP_ADDED:-false}" == true ]]; then
+        info "Faça logout/login para aplicar o grupo docker."
+    fi
+
+    success "Docker configurado com sucesso."
 }
