@@ -1,15 +1,23 @@
 #!/usr/bin/env bash
 
 # =============================
+# VALIDAÇÃO DE CONTEXTO
+# =============================
+
+require_python_context() {
+    : "${DISTRO_FAMILY:?}"
+}
+
+# =============================
 # MAPEAMENTO DE PACOTES
 # =============================
 
 get_python_packages() {
-    case "$DISTRO" in
-        ubuntu|debian)
+    case "$DISTRO_FAMILY" in
+        debian)
             echo "python3 python3-pip python3-venv"
             ;;
-        fedora)
+        redhat)
             echo "python3 python3-pip"
             ;;
         arch)
@@ -17,6 +25,7 @@ get_python_packages() {
             ;;
         *)
             error "Distribuição não suportada para Python."
+            exit 1
             ;;
     esac
 }
@@ -26,6 +35,8 @@ get_python_packages() {
 # =============================
 
 install_python() {
+    require_python_context
+
     info "Verificando ambiente Python..."
 
     local packages
