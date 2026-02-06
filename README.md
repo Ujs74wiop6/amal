@@ -6,7 +6,7 @@ O projeto evoluiu para uma **arquitetura modular**, onde cada responsabilidade d
 
 ---
 
-## 🚀 Propósito
+## Propósito
 
 Automatizar a configuração inicial de ambientes Linux para desenvolvimento e uso geral, incluindo:
 
@@ -21,7 +21,7 @@ Compatível com **Ubuntu**, **Debian**, **Fedora** e **Arch Linux**.
 
 ---
 
-## 🧱 Arquitetura do Projeto
+## Arquitetura do Projeto
 
 ```
 amal/
@@ -41,15 +41,15 @@ Cada módulo possui **uma responsabilidade única (SRP)** e pode ser evoluído o
 
 ---
 
-## ⚙️ O que o script faz?
+## O que o script faz?
 
-### 🔍 Core e preparação
+### Core e preparação
 
 * Garante execução em Bash
 * Valida `sudo`
 * Centraliza funções de log (`info`, `warn`, `success`, `error`)
 
-### 🐧 Detecção de distribuição
+### Detecção de distribuição
 
 * Identifica automaticamente a distro via `/etc/os-release`
 * Define:
@@ -57,7 +57,7 @@ Cada módulo possui **uma responsabilidade única (SRP)** e pode ser evoluído o
   * Gerenciador de pacotes (`apt`, `dnf`, `pacman`)
   * Comandos padronizados de update e install
 
-### 📦 Pacotes essenciais
+### Pacotes essenciais
 
 Instala de forma idempotente:
 
@@ -69,22 +69,22 @@ Instala de forma idempotente:
 
 > O cache do sistema é atualizado apenas **uma vez**, mesmo que múltiplos módulos dependam dele.
 
-### 🐳 Docker
+### Docker
 
 * Instala o pacote correto por distro
 * Habilita e inicia o serviço Docker
 * Adiciona o usuário atual ao grupo `docker`
 * Evita reconfigurações desnecessárias
 
-> ⚠️ É necessário logout/login ou reboot para usar Docker sem `sudo`.
+> É necessário logout/login ou reboot para usar Docker sem `sudo`.
 
-### 🐍 Ambiente Python
+### Ambiente Python
 
 * Instala Python, pip e venv conforme a distro
 * Valida versões instaladas
 * Não instala bibliotecas globais automaticamente
 
-### 🔐 SSH (interativo)
+### SSH (interativo)
 
 * Verifica se já existe uma chave `ed25519`
 * Pergunta se o usuário deseja gerar uma nova chave
@@ -94,7 +94,7 @@ Instala de forma idempotente:
 
 > Nunca sobrescreve chaves existentes sem consentimento explícito.
 
-### 🖥️ Shell (.bashrc)
+### Shell (.bashrc)
 
 * Insere aliases e funções no `~/.bashrc`
 * Usa **marcadores exclusivos** para garantir idempotência
@@ -102,49 +102,47 @@ Instala de forma idempotente:
 
 ---
 
-## 🗒️ Aliases e funções adicionados
+## Aliases e funções adicionados
 
-### 📁 Navegação
+### Navegação
 
 * `ll`, `la`, `l`
 
-### 🔧 Utilitários
+### Utilitários
 
 * `cls` → limpa o terminal
 * `neo` → exibe informações do sistema
 * `internet` → testa conectividade
 
-### 🖥️ Sistema (use com cautela)
+### Sistema (use com cautela)
 
 * `sN` → shutdown imediato
 * `rB` → reboot imediato
 
-### 🐍 Python
+### Python
 
 * `py` → python3
 * `pipup` → atualiza o pip
 * `venv` → cria ambiente virtual padrão
 
-### 🔄 Atualização do sistema
+### Atualização do sistema
 
 * `update` → comando adaptado automaticamente à distro
 
-### 🔍 Funções
+### Funções
 
 * `mostrar <alias>` → exibe a definição de um alias
 
 ---
 
-## 🛠️ Pré-requisitos
+## Pré-requisitos
 
 * Linux (Ubuntu, Debian, Fedora ou Arch)
-* Usuário com privilégios `sudo`
-* Shell Bash
-* Conexão com a internet
+* Shell (Bash)
 
 ---
 
-## 📥 Instalação
+## Instalação
 
 1. Clone o repositório:
 
@@ -164,22 +162,3 @@ chmod +x install.sh
 ```bash
 ./install.sh
 ```
-
----
-
-## 💡 Observações Importantes
-
-* O script é **totalmente idempotente**
-* Pode ser executado múltiplas vezes com segurança
-* A arquitetura modular facilita auditoria e manutenção
-* A geração de chave SSH é **opcional e interativa**
-* Recomenda-se revisar aliases antes de uso em ambientes críticos
-
----
-
-## ✅ Status do Projeto
-
-* ✔ Multidistro
-* ✔ Modular
-* ✔ Idempotente
-* ✔ Arquitetura limpa
